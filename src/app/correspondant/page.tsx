@@ -14,7 +14,7 @@ import  Input  from "../Utils/Input"
 import { Facebook, Twitter, Linkedin, Pencil, Trash2 } from "lucide-react"
 import noImage from '../assets/noImage.jpg'
 import {  createUserWithEmailAndPassword } from "firebase/auth"
-import { collection, addDoc,getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"
+import { collection, addDoc,getDocs, doc, deleteDoc, updateDoc, setDoc } from "firebase/firestore"
 import { auth, db} from "../../../firebaseConfig"
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
