@@ -153,34 +153,34 @@ export default function Component() {
 
 
 
-  // const handleAddUser = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Create a new user with email and password
-  //     const userCredential = await createUserWithEmailAndPassword(auth, newUser.smail, newUser.password);
-  //     const user = userCredential.user;
-  //     console.log(newUser);
+  const handleAddUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Create a new user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, newUser.smail, newUser.password);
+      const user = userCredential.user;
+      console.log(newUser);
   
-  //     // Add the user to the 'Users' collection in Firestore with the UID as the document ID
-  //     await setDoc(doc(db, "Users", user.uid), {
-  //       smail: newUser.smail,
-  //       role: newUser.role,
-  //       academicYear: newUser.academicYear,
-  //     });
+      // Add the user to the 'Users' collection in Firestore with the UID as the document ID
+      await setDoc(doc(db, "Users", user.uid), {
+        smail: newUser.smail,
+        role: newUser.role,
+        academicYear: newUser.academicYear,
+      });
   
-  //     // Close the user addition modal and reset the form
-  //     setIsAddUserOpen(false);
-  //     setNewUser({ smail: '', password: '', role: '', academicYear: '' });
-  //     alert("User added successfully!");
-  //   } catch (error: unknown) {
-  //     if (error instanceof Error) {
-  //       console.error("Error message:", error.message);
-  //       alert("Failed to add user: " + error.message);
-  //     } else {
-  //       console.error("Unknown error", error);
-  //     }
-  //   }
-  // };
+      // Close the user addition modal and reset the form
+      setIsAddUserOpen(false);
+      setNewUser({ smail: '', password: '', role: '', academicYear: '' });
+      alert("User added successfully!");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error message:", error.message);
+        alert("Failed to add user: " + error.message);
+      } else {
+        console.error("Unknown error", error);
+      }
+    }
+  };
   
 
 

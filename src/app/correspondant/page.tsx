@@ -153,51 +153,45 @@ export default function Component() {
 
 
 
-  // const handleAddUser = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Create a new user with email and password
-  //     const userCredential = await createUserWithEmailAndPassword(auth, newUser.smail, newUser.password);
-  //     const user = userCredential.user;
-  //     console.log(newUser);
+  const handleAddUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Create a new user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, newUser.smail, newUser.password);
+      const user = userCredential.user;
+      console.log(newUser);
   
-  //     // Add the user to the 'Users' collection in Firestore with the UID as the document ID
-  //     await setDoc(doc(db, "Users", user.uid), {
-  //       smail: newUser.smail,
-  //       role: newUser.role,
-  //       academicYear: newUser.academicYear,
-  //     });
+      // Add the user to the 'Users' collection in Firestore with the UID as the document ID
+      await setDoc(doc(db, "Users", user.uid), {
+        smail: newUser.smail,
+        role: newUser.role,
+        academicYear: newUser.academicYear,
+      });
   
-  //     // Close the user addition modal and reset the form
-  //     setIsAddUserOpen(false);
-  //     setNewUser({ smail: '', password: '', role: '', academicYear: '' });
-  //     alert("User added successfully!");
-  //   } catch (error: unknown) {
-  //     if (error instanceof Error) {
-  //       console.error("Error message:", error.message);
-  //       alert("Failed to add user: " + error.message);
-  //     } else {
-  //       console.error("Unknown error", error);
-  //     }
-  //   }
-  // };
+      // Close the user addition modal and reset the form
+      setIsAddUserOpen(false);
+      setNewUser({ smail: '', password: '', role: '', academicYear: '' });
+      alert("User added successfully!");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error message:", error.message);
+        alert("Failed to add user: " + error.message);
+      } else {
+        console.error("Unknown error", error);
+      }
+    }
+  };
   
 
 
   const handleAddArticle = async (newArticle: Partial<Post>) => {
-    if (!user) return; // Ensure user is authenticated
-  
     try {
-      // Use the UID of the currently authenticated user as the document ID
-      await setDoc(doc(db, "Articles", user.uid), {
+      const articleDocRef = await addDoc(collection(db, "Articles"), {
         ...newArticle,
-        imageUrl: newArticle.imageUrl || '',
-        authorId: user.uid // Optionally, store the UID as an author ID field
+        imageUrl: newArticle.imageUrl || ''
       });
-  
-      const article = { id: user.uid, ...newArticle } as Post;
+      const article = { id: articleDocRef.id, ...newArticle } as Post;
       setArticles([article, ...articles]);
-      alert("Article added successfully!");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Error message:", error.message);
@@ -207,7 +201,6 @@ export default function Component() {
       }
     }
   };
-  
 
   const handleEditArticle = async (updatedArticle: Partial<Post>) => {
     if (!selectedArticle) return;
