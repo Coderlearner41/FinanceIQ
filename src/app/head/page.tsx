@@ -188,14 +188,14 @@ export default function Component() {
     if (!user) return; // Ensure user is authenticated
   
     try {
-      // Use the UID of the currently authenticated user as the document ID
-      await setDoc(doc(db, "Articles", user.uid), {
+      // Add a new document with an auto-generated ID in the Articles collection
+      const articleDocRef = await addDoc(collection(db, "Articles"), {
         ...newArticle,
         imageUrl: newArticle.imageUrl || '',
-        authorId: user.uid // Optionally, store the UID as an author ID field
+        authorId: user.uid // Store the user's UID as the author ID
       });
   
-      const article = { id: user.uid, ...newArticle } as Post;
+      const article = { id: articleDocRef.id, ...newArticle, authorId: user.uid } as Post;
       setArticles([article, ...articles]);
       alert("Article added successfully!");
     } catch (error: unknown) {
