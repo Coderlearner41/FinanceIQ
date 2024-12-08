@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import noImage from './assets/noImage.jpg'
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig"; 
@@ -28,7 +29,6 @@ const fetchArticles = async (): Promise<Article[]> => {
   return articlesData;
 };
 
-const noImage = '/images/no-image.png';
 
 const Home = () => {
   const currentDate = new Date().toLocaleDateString('en-US', {
